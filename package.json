@@ -1,0 +1,14 @@
+{
+  "name": "3factor-app-on-aws",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/*"
+    ]
+  },
+  "author": "intercept6 <4459220+intercept6@users.noreply.github.com>"
+}

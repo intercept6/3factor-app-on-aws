@@ -1,0 +1,43 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Order {
+  orderId: ID!
+  userId: String!
+  address: String!
+  menuItems: [String!]!
+  orderValid: Boolean!
+  paymentValid: Boolean!
+  restaurantApproved: Boolean!
+  driverAssigned: Boolean!
+}
+
+input CreateOrderInput {
+  userId: String!
+  address: String!
+  menuItems: [String!]!
+}
+
+input UpdateOrderInput {
+  orderId: ID!
+  orderValid: Boolean
+  paymentValid: Boolean
+  restaurantApproved: Boolean
+  driverAssigned: Boolean
+}
+
+type Query {
+  getOrder(orderId: ID!): Order
+}
+
+type Mutation {
+  createOrder(input: CreateOrderInput!): Order!
+  updateOrder(input: UpdateOrderInput!): Order!
+}
+
+type Subscription {
+  onOrderUpdate(orderId: ID!): Order @aws_subscribe(mutations: ["updateOrder"])
+}

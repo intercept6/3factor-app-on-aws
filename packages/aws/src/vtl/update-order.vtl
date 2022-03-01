@@ -1,0 +1,28 @@
+#set($expression = "SET")
+#set($expressionNames = {})
+#set($expressionValues = {})
+
+#foreach($entry in $ctx.args.input.entrySet())
+  #if ($entry.key != "orderId")
+    #set($expression = "${expression} #$entry.key = :$entry.key")
+    #if ( $foreach.hasNext )
+      #set( $expression = "${expression}," )
+    #end
+
+    $util.qr($expressionNames.put("#$entry.key", $entry.key))
+    $util.qr($expressionValues.put(":$entry.key", $entry.value))
+  #end
+#end
+
+{
+  "version" : "2018-05-29",
+  "operation" : "UpdateItem",
+  "key" : {
+    "orderId": $util.dynamodb.toDynamoDBJson($ctx.args.input.orderId),
+  },
+  "update" : {
+    "expression": "$expression",
+    "expressionNames": $util.toJson($expressionNames),
+    "expressionValues": $util.dynamodb.toMapValuesJson($expressionValues)
+  }
+}
