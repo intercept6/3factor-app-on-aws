@@ -1,4 +1,4 @@
-import {RemovalPolicy, Stack, StackProps} from 'aws-cdk-lib';
+import {CfnOutput, RemovalPolicy, Stack, StackProps} from 'aws-cdk-lib';
 import {AttributeType, StreamViewType, Table} from 'aws-cdk-lib/aws-dynamodb';
 import {Construct} from 'constructs';
 import {OrderEventBus} from './constructs/order-event-bus';
@@ -23,6 +23,7 @@ export class ThreeFactorAppOnAwsStack extends Stack {
     const {api} = new WebApi(this, 'WebApi', {
       orderTable,
     });
+    new CfnOutput(this, 'GraphqlApiUrl', {value: api.graphqlUrl});
 
     const {orderEventBus} = new OrderEventBus(this, 'OrderEventBus', {
       orderTable,
