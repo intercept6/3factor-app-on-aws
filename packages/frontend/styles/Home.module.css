@@ -108,6 +108,39 @@
   margin-left: 0.5rem;
 }
 
+.table table,
+.table td,
+.table th {
+  border-collapse: collapse;
+  border: none;
+  padding: 8px;
+}
+
+.table ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.table td {
+  vertical-align: top;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tr:hover {
+  background-color: #ddd;
+}
+
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

@@ -1,0 +1,16 @@
+overwrite: true
+schema:
+  - '../../schema.graphql'
+documents:
+  - './src/graphql/operations/*.graphql'
+generates:
+  src/graphql/generated.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-urql'
+    config:
+      withComponent: false
+      withHooks: true
+      withHOC: false
+      enumsAsTypes: true

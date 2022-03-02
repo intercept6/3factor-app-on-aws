@@ -1,0 +1,46 @@
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.table table,
+.table td,
+.table th {
+  border-collapse: collapse;
+  border: none;
+  padding: 8px;
+}
+
+.table ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.table td {
+  vertical-align: top;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tr:hover {
+  background-color: #ddd;
+}
+
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}

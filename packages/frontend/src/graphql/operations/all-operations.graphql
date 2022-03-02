@@ -1,0 +1,25 @@
+query GetOrder($orderId: ID!) {
+  getOrder(orderId: $orderId) {
+    orderId
+    userId
+    address
+    menuItems
+    orderValid
+    paymentValid
+    restaurantApproved
+    driverAssigned
+  }
+}
+
+subscription onOrderUpdate($orderId: ID!) {
+  onOrderUpdate(orderId: $orderId) {
+    orderId
+    userId
+    address
+    menuItems
+    orderValid
+    paymentValid
+    restaurantApproved
+    driverAssigned
+  }
+}

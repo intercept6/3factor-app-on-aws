@@ -1,8 +1,65 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { Order, useGetOrderQuery } from '../src/graphql/generated';
 import styles from '../styles/Home.module.css';
 
+const Info = ({ order }: { order: Order | null | undefined }) => {
+  if (order == null) {
+    return <div>No order found</div>;
+  }
+
+  return (
+    <table className={styles.table}>
+      <tbody>
+        <tr>
+          <td>Created: </td>
+          <td>b</td>
+        </tr>
+        <tr>
+          <td>id: </td>
+          <td>{order.orderId}</td>
+        </tr>
+        <tr>
+          <td>Status:</td>
+          <td>
+            <ul>
+              <li>{order.orderValid ? '✅' : '❌'} - Order validation</li>
+              <li>{order.paymentValid ? '✅' : '❌'} - Your payment</li>
+              <li>
+                {order.restaurantApproved ? '✅' : '❌'} - Restaurant approval
+              </li>
+              <li>{order.driverAssigned ? '✅' : '❌'} - Driver assignment</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+
+  // return (
+  //   <ul>
+  //     {Object.entries(order).map(([key, value]) => {
+  //       if (key === '__typename') {
+  //         return null;
+  //       }
+
+  //       return (
+  //         <li key={`${key}-${value}`}>
+  //           {key}: {value}
+  //         </li>
+  //       );
+  //     })}
+  //   </ul>
+  // );
+};
+
 const Home: NextPage = () => {
+  const [{ data }] = useGetOrderQuery({
+    variables: {
+      orderId: '16b33401-0e98-490a-836f-d8a2f49ff69c',
+    },
+  });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,6 +69,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <Info order={data?.getOrder} />
+
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
