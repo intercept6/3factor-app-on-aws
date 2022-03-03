@@ -71,7 +71,8 @@ export class WebApi extends Construct {
     "orderValid": false,
     "paymentValid": false,
     "restaurantApproved": false,
-    "driverAssigned": false
+    "driverAssigned": false,
+    "createdAt": $util.time.nowISO8601()
   })
 }`),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),

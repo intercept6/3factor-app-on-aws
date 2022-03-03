@@ -13,6 +13,7 @@ type Order {
   paymentValid: Boolean!
   restaurantApproved: Boolean!
   driverAssigned: Boolean!
+  createdAt: AWSDateTime!
 }
 
 input CreateOrderInput {

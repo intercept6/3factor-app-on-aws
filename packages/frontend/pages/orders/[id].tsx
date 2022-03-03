@@ -47,7 +47,6 @@ const Order = () => {
 
       setOrderData({
         ...prev,
-        __typename: 'Order',
         orderValid: current?.orderValid
           ? current?.orderValid
           : prev?.orderValid,
@@ -75,7 +74,15 @@ const Order = () => {
           <tbody>
             <tr>
               <td>Created: </td>
-              <td>b</td>
+              <td>
+                {new Intl.DateTimeFormat('ja-Jp', {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                }).format(new Date(orderData.createdAt))}
+              </td>
             </tr>
             <tr>
               <td>id: </td>

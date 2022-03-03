@@ -9,4 +9,5 @@ export interface Detail {
   paymentValid: boolean;
   restaurantApproved: boolean;
   driverAssigned: boolean;
+  createdAt: string;
 }

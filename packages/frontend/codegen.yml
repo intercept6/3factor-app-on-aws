@@ -1,6 +1,7 @@
 overwrite: true
 schema:
   - '../../schema.graphql'
+  - '../../appsync.graphql'
 documents:
   - './src/graphql/operations/*.graphql'
 generates:
@@ -10,7 +11,20 @@ generates:
       - 'typescript-operations'
       - 'typed-document-node'
     config:
+      skipTypename: true
       withComponent: false
       withHooks: true
       withHOC: false
       enumsAsTypes: true
+
+config:
+  scalars:
+    AWSJSON: string
+    AWSDate: string
+    AWSTime: string
+    AWSDateTime: string
+    AWSTimestamp: number
+    AWSEmail: string
+    AWSURL: string
+    AWSPhone: string
+    AWSIPAddress: string

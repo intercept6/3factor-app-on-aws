@@ -11,6 +11,15 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  AWSDate: string;
+  AWSDateTime: string;
+  AWSEmail: string;
+  AWSIPAddress: string;
+  AWSJSON: string;
+  AWSPhone: string;
+  AWSTime: string;
+  AWSTimestamp: number;
+  AWSURL: string;
 };
 
 export type CreateOrderInput = {
@@ -20,7 +29,6 @@ export type CreateOrderInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   createOrder: Order;
   updateOrder: Order;
 };
@@ -36,8 +44,8 @@ export type MutationUpdateOrderArgs = {
 };
 
 export type Order = {
-  __typename?: 'Order';
   address: Scalars['String'];
+  createdAt: Scalars['AWSDateTime'];
   driverAssigned: Scalars['Boolean'];
   menuItems: Array<Scalars['String']>;
   orderId: Scalars['ID'];
@@ -48,7 +56,6 @@ export type Order = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   getOrder?: Maybe<Order>;
 };
 
@@ -58,7 +65,6 @@ export type QueryGetOrderArgs = {
 };
 
 export type Subscription = {
-  __typename?: 'Subscription';
   onOrderUpdate?: Maybe<Order>;
 };
 
@@ -78,23 +84,23 @@ export type UpdateOrderInput = {
 export type CreateOrderMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', orderId: string } };
+export type CreateOrderMutation = { createOrder: { orderId: string } };
 
 export type GetOrderQueryVariables = Exact<{
   orderId: Scalars['ID'];
 }>;
 
 
-export type GetOrderQuery = { __typename?: 'Query', getOrder?: { __typename?: 'Order', orderId: string, userId: string, address: string, menuItems: Array<string>, orderValid: boolean, paymentValid: boolean, restaurantApproved: boolean, driverAssigned: boolean } | null };
+export type GetOrderQuery = { getOrder?: { orderId: string, userId: string, address: string, menuItems: Array<string>, orderValid: boolean, paymentValid: boolean, restaurantApproved: boolean, driverAssigned: boolean, createdAt: string } | null };
 
 export type OnOrderUpdateSubscriptionVariables = Exact<{
   orderId: Scalars['ID'];
 }>;
 
 
-export type OnOrderUpdateSubscription = { __typename?: 'Subscription', onOrderUpdate?: { __typename?: 'Order', orderId: string, userId: string, address: string, menuItems: Array<string>, orderValid: boolean, paymentValid: boolean, restaurantApproved: boolean, driverAssigned: boolean } | null };
+export type OnOrderUpdateSubscription = { onOrderUpdate?: { orderId: string, userId: string, address: string, menuItems: Array<string>, orderValid: boolean, paymentValid: boolean, restaurantApproved: boolean, driverAssigned: boolean, createdAt: string } | null };
 
 
 export const CreateOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOrder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"StringValue","value":"Taro","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"address"},"value":{"kind":"StringValue","value":"Tokyo","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"menuItems"},"value":{"kind":"ListValue","values":[{"kind":"StringValue","value":"Breads","block":false},{"kind":"StringValue","value":"Sauces","block":false},{"kind":"StringValue","value":"Toppings","block":false}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"orderId"}}]}}]}}]} as unknown as DocumentNode<CreateOrderMutation, CreateOrderMutationVariables>;
-export const GetOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"menuItems"}},{"kind":"Field","name":{"kind":"Name","value":"orderValid"}},{"kind":"Field","name":{"kind":"Name","value":"paymentValid"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantApproved"}},{"kind":"Field","name":{"kind":"Name","value":"driverAssigned"}}]}}]}}]} as unknown as DocumentNode<GetOrderQuery, GetOrderQueryVariables>;
-export const OnOrderUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"onOrderUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onOrderUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"menuItems"}},{"kind":"Field","name":{"kind":"Name","value":"orderValid"}},{"kind":"Field","name":{"kind":"Name","value":"paymentValid"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantApproved"}},{"kind":"Field","name":{"kind":"Name","value":"driverAssigned"}}]}}]}}]} as unknown as DocumentNode<OnOrderUpdateSubscription, OnOrderUpdateSubscriptionVariables>;
+export const GetOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"menuItems"}},{"kind":"Field","name":{"kind":"Name","value":"orderValid"}},{"kind":"Field","name":{"kind":"Name","value":"paymentValid"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantApproved"}},{"kind":"Field","name":{"kind":"Name","value":"driverAssigned"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetOrderQuery, GetOrderQueryVariables>;
+export const OnOrderUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"onOrderUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onOrderUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"menuItems"}},{"kind":"Field","name":{"kind":"Name","value":"orderValid"}},{"kind":"Field","name":{"kind":"Name","value":"paymentValid"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantApproved"}},{"kind":"Field","name":{"kind":"Name","value":"driverAssigned"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<OnOrderUpdateSubscription, OnOrderUpdateSubscriptionVariables>;

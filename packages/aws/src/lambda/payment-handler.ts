@@ -33,6 +33,7 @@ export const handler: EventBridgeHandler<
         paymentValid
         restaurantApproved
         driverAssigned
+        createdAt
       }
     }
   `;
