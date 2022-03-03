@@ -2,6 +2,7 @@ node_modules
 *.js
 !.prettierrc.js
 !jest.config.js
+!src/cloudfront-function/**/*.js
 
 # CDK asset staging directory
 .cdk.staging

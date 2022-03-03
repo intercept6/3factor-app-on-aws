@@ -8,7 +8,7 @@ generates:
     plugins:
       - 'typescript'
       - 'typescript-operations'
-      - 'typescript-urql'
+      - 'typed-document-node'
     config:
       withComponent: false
       withHooks: true

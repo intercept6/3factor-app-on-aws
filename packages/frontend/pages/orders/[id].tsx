@@ -1,8 +1,12 @@
+import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
-  useGetOrderQuery,
-  useOnOrderUpdateSubscription,
+  GetOrderDocument,
+  OnOrderUpdateDocument,
+  Order,
 } from '../../src/graphql/generated';
+import { usePatchedSubscription } from '../../src/hooks/usePatchedSubscription';
 import styles from '../../styles/Order.module.css';
 
 const Status = ({ context, status }: { context: string; status: boolean }) => {
@@ -18,25 +22,49 @@ const Status = ({ context, status }: { context: string; status: boolean }) => {
 
 const Order = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const [orderId, setOrderId] = useState('');
 
-  const handleCancel = () => {
-    router.push('/');
-  };
+  useEffect(() => {
+    if (router.isReady) {
+      if (typeof router.query.id === 'string') {
+        setOrderId(router.query.id);
+      }
+    }
+  }, [router]);
 
-  const [] = useOnOrderUpdateSubscription({
-    variables: { orderId: id as string },
+  const { data: initData } = useQuery(GetOrderDocument, {
+    variables: { orderId },
+  });
+  const { data: subscData } = usePatchedSubscription(OnOrderUpdateDocument, {
+    variables: { orderId },
   });
 
-  const [{ data }] = useGetOrderQuery({
-    variables: {
-      orderId: id as string,
-    },
-  });
+  const [orderData, setOrderData] = useState<Order | null>(null);
+  useEffect(() => {
+    if (initData?.getOrder != null) {
+      const prev = initData.getOrder;
+      const current = subscData?.onOrderUpdate;
 
-  const order = data?.getOrder;
+      setOrderData({
+        ...prev,
+        __typename: 'Order',
+        orderValid: current?.orderValid
+          ? current?.orderValid
+          : prev?.orderValid,
+        paymentValid: current?.paymentValid
+          ? current?.paymentValid
+          : prev?.paymentValid,
+        restaurantApproved: current?.restaurantApproved
+          ? current?.restaurantApproved
+          : prev?.restaurantApproved,
+        driverAssigned: current?.driverAssigned
+          ? current?.driverAssigned
+          : prev?.driverAssigned,
+      });
+    }
+  }, [initData, subscData]);
 
-  if (order == null) {
+  if (orderData == null) {
     return <div>No order found</div>;
   }
 
@@ -51,7 +79,7 @@ const Order = () => {
             </tr>
             <tr>
               <td>id: </td>
-              <td>{order.orderId}</td>
+              <td>{orderData.orderId}</td>
             </tr>
             <tr>
               <td>Status:</td>
@@ -59,24 +87,32 @@ const Order = () => {
                 <ul>
                   <Status
                     context="Order validation"
-                    status={order.orderValid}
+                    status={orderData.orderValid}
                   />
-                  <Status context="Your payment" status={order.paymentValid} />
+                  <Status
+                    context="Your payment"
+                    status={orderData.paymentValid}
+                  />
                   <Status
                     context="Restaurant approval"
-                    status={order.restaurantApproved}
+                    status={orderData.restaurantApproved}
                   />
                   <Status
                     context="Driver assignment"
-                    status={order.driverAssigned}
+                    status={orderData.driverAssigned}
                   />
                 </ul>
               </td>
             </tr>
           </tbody>
         </table>
-
-        <button onClick={handleCancel}>Cancel</button>
+        <button
+          onClick={() => {
+            router.push('/');
+          }}
+        >
+          Cancel
+        </button>
       </main>
     </div>
   );

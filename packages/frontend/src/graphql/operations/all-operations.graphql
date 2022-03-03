@@ -1,3 +1,15 @@
+mutation CreateOrder {
+  createOrder(
+    input: {
+      userId: "Taro"
+      address: "Tokyo"
+      menuItems: ["Breads", "Sauces", "Toppings"]
+    }
+  ) {
+    orderId
+  }
+}
+
 query GetOrder($orderId: ID!) {
   getOrder(orderId: $orderId) {
     orderId
