@@ -54,6 +54,13 @@ export class WebApi extends Construct {
     });
 
     orderDS.createResolver({
+      typeName: 'Query',
+      fieldName: 'getAllOrders',
+      requestMappingTemplate: MappingTemplate.dynamoDbScanTable(),
+      responseMappingTemplate: MappingTemplate.dynamoDbResultList(),
+    });
+
+    orderDS.createResolver({
       typeName: 'Mutation',
       fieldName: 'createOrder',
       requestMappingTemplate: MappingTemplate.fromString(`
