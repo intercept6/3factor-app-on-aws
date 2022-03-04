@@ -20,21 +20,16 @@ import { OrderStatus } from '../../components/OrderStatus';
 
 const Order = () => {
   const router = useRouter();
-  const [orderId, setOrderId] = useState('');
-
-  useEffect(() => {
-    if (router.isReady) {
-      if (typeof router.query.id === 'string') {
-        setOrderId(router.query.id);
-      }
-    }
-  }, [router]);
+  const orderId = router.query.id as string;
+  const skip = typeof orderId !== 'string' || orderId === '';
 
   const { data: initData } = useQuery(GetOrderDocument, {
     variables: { orderId },
+    skip,
   });
   const { data: subscData } = usePatchedSubscription(OnOrderUpdateDocument, {
     variables: { orderId },
+    skip,
   });
 
   const [orderData, setOrderData] = useState<Order | null>(null);
