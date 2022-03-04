@@ -48,7 +48,6 @@ const Home: NextPage = () => {
       return;
     }
 
-    console.log({ myOrder });
     await mutateFunction({
       variables: {
         menuItems: myOrder,
