@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { Button, TableBody } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
@@ -7,18 +8,15 @@ import {
   Order,
 } from '../../src/graphql/generated';
 import { usePatchedSubscription } from '../../src/hooks/usePatchedSubscription';
-import styles from '../../styles/Order.module.css';
-
-const Status = ({ context, status }: { context: string; status: boolean }) => {
-  return (
-    <li>
-      {status ? '✅' : '❌'} -{' '}
-      <p style={{ display: 'inline', color: status ? 'green' : undefined }}>
-        {context}
-      </p>
-    </li>
-  );
-};
+import {
+  TableContainer,
+  Table,
+  TableCell,
+  TableRow,
+  Paper,
+  Grid,
+} from '@mui/material';
+import { OrderStatus } from '../../components/OrderStatus';
 
 const Order = () => {
   const router = useRouter();
@@ -68,60 +66,65 @@ const Order = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <table className={styles.table}>
-          <tbody>
-            <tr>
-              <td>Created: </td>
-              <td>
-                {new Intl.DateTimeFormat('ja-Jp', {
-                  year: 'numeric',
-                  month: 'numeric',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                }).format(new Date(orderData.createdAt))}
-              </td>
-            </tr>
-            <tr>
-              <td>id: </td>
-              <td>{orderData.orderId}</td>
-            </tr>
-            <tr>
-              <td>Status:</td>
-              <td>
-                <ul>
-                  <Status
-                    context="Order validation"
-                    status={orderData.orderValid}
+    <Grid container direction="column" alignItems="center" spacing={2}>
+      <Grid item>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>Created: </TableCell>
+                <TableCell>
+                  {new Intl.DateTimeFormat('ja-Jp', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                  }).format(new Date(orderData.createdAt))}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>id: </TableCell>
+                <TableCell>{orderData.orderId}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Status:</TableCell>
+                <TableCell>
+                  <OrderStatus
+                    orderValid={{
+                      context: 'Order validation',
+                      status: orderData.orderValid,
+                    }}
+                    paymentValid={{
+                      context: 'Your payment',
+                      status: orderData.paymentValid,
+                    }}
+                    restaurantApproved={{
+                      context: 'Restaurant approval',
+                      status: orderData.restaurantApproved,
+                    }}
+                    driverAssigned={{
+                      context: 'Driver assignment',
+                      status: orderData.driverAssigned,
+                    }}
                   />
-                  <Status
-                    context="Your payment"
-                    status={orderData.paymentValid}
-                  />
-                  <Status
-                    context="Restaurant approval"
-                    status={orderData.restaurantApproved}
-                  />
-                  <Status
-                    context="Driver assignment"
-                    status={orderData.driverAssigned}
-                  />
-                </ul>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <button
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
           onClick={() => {
             router.push('/');
           }}
         >
-          Cancel
-        </button>
-      </main>
-    </div>
+          戻る
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 

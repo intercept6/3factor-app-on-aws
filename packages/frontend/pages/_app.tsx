@@ -1,4 +1,3 @@
-import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { AuthOptions, AUTH_TYPE, createAuthLink } from 'aws-appsync-auth-link';
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
@@ -11,7 +10,6 @@ import {
 } from '@apollo/client';
 
 const url = process.env.NEXT_PUBLIC_GRAPHQL_API_URL!;
-// const wsUrl = process.env.NEXT_PUBLIC_GRAPHQL_REALTIME_API_URL!;
 const region = 'ap-northeast-1';
 const auth: AuthOptions = {
   type: AUTH_TYPE.API_KEY,
@@ -28,6 +26,11 @@ const link = ApolloLink.from([
 const client = new ApolloClient({
   link,
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: { fetchPolicy: 'no-cache' },
+    query: { fetchPolicy: 'no-cache' },
+    mutate: { fetchPolicy: 'no-cache' },
+  },
 });
 
 function MyApp({ Component, pageProps }: AppProps) {

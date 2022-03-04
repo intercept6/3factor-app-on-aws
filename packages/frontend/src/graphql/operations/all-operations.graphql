@@ -24,6 +24,20 @@ query GetOrder($orderId: ID!) {
   }
 }
 
+query GetAllOrders {
+  getAllOrders {
+    orderId
+    userId
+    address
+    menuItems
+    orderValid
+    paymentValid
+    restaurantApproved
+    driverAssigned
+    createdAt
+  }
+}
+
 subscription onOrderUpdate($orderId: ID!) {
   onOrderUpdate(orderId: $orderId) {
     orderId

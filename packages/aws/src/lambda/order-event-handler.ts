@@ -20,6 +20,10 @@ export const handler: DynamoDBStreamHandler = async event => {
     Detail: JSON.stringify(detail),
   }));
 
+  if (entries.length < 1) {
+    return;
+  }
+
   await client.send(
     new PutEventsCommand({
       Entries: entries,
