@@ -9,7 +9,7 @@ const OrderStatusLine = ({
 }) => {
   return (
     <li className={styles.line}>
-      {status ? '✅' : '❌'} -{' '}
+      {status ? '✅' : '❌'}{' '}
       <p style={{ display: 'inline', color: status ? 'green' : undefined }}>
         {context}
       </p>
@@ -25,20 +25,14 @@ export const OrderStatus = (props: {
 }) => {
   return (
     <ul>
+      <OrderStatusLine context="注文の検証" status={props.orderValid.status} />
+      <OrderStatusLine context="支払い" status={props.paymentValid.status} />
       <OrderStatusLine
-        context="Order validation"
-        status={props.orderValid.status}
-      />
-      <OrderStatusLine
-        context="Your payment"
-        status={props.paymentValid.status}
-      />
-      <OrderStatusLine
-        context="Restaurant approval"
+        context="レストランの受け付け"
         status={props.restaurantApproved.status}
       />
       <OrderStatusLine
-        context="Driver assignment"
+        context="ドライバーのアサイン"
         status={props.driverAssigned.status}
       />
     </ul>

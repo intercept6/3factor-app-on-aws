@@ -62,7 +62,7 @@ const Order = () => {
   }, [initData, subscData]);
 
   if (orderData == null) {
-    return <div>No order found</div>;
+    return <></>;
   }
 
   return (
@@ -72,7 +72,7 @@ const Order = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell>Created: </TableCell>
+                <TableCell>注文日時</TableCell>
                 <TableCell>
                   {new Intl.DateTimeFormat('ja-Jp', {
                     year: 'numeric',
@@ -84,11 +84,15 @@ const Order = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>id: </TableCell>
+                <TableCell>オーダーID</TableCell>
                 <TableCell>{orderData.orderId}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Status:</TableCell>
+                <TableCell>商品</TableCell>
+                <TableCell>{orderData.menuItems.join(', ')}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>ステータス</TableCell>
                 <TableCell>
                   <OrderStatus
                     orderValid={{

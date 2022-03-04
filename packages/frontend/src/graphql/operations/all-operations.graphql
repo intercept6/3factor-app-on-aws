@@ -1,9 +1,9 @@
-mutation CreateOrder {
+mutation CreateOrder($menuItems: [String!]!) {
   createOrder(
     input: {
-      userId: "Taro"
-      address: "Tokyo"
-      menuItems: ["Breads", "Sauces", "Toppings"]
+      userId: "8d9f3b14-8350-4b56-b6c0-f62ad9684dc6"
+      address: "東京都A区B1-1"
+      menuItems: $menuItems
     }
   ) {
     orderId
