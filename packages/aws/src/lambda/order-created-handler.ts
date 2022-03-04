@@ -22,7 +22,7 @@ export const handler: EventBridgeHandler<
 > = async event => {
   console.log(JSON.stringify(event));
 
-  await timeout(10_000); // オーダー情報の検証 （例）住所が店舗から5km居ないか、なりすましリクエストじゃないか
+  await timeout(3_000); // オーダー情報の検証 （例）住所が店舗から5km居ないか、なりすましリクエストじゃないか
 
   const UPDATE_ORDER = gql`
     mutation updateOrder($orderId: ID!) {
