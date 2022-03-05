@@ -3,7 +3,7 @@ import {AttributeType, StreamViewType, Table} from 'aws-cdk-lib/aws-dynamodb';
 import {Construct} from 'constructs';
 import {OrderEventBus} from './constructs/order-event-bus';
 import {OrderEventRule} from './constructs/order-event-rule';
-import {WebApi} from './constructs/graphql-api';
+import {WebApi} from './constructs/web-api';
 
 export class ThreeFactorAppOnAwsStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {

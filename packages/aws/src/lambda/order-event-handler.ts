@@ -24,9 +24,5 @@ export const handler: DynamoDBStreamHandler = async event => {
     return;
   }
 
-  await client.send(
-    new PutEventsCommand({
-      Entries: entries,
-    })
-  );
+  await client.send(new PutEventsCommand({Entries: entries}));
 };
