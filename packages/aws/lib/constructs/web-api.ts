@@ -63,25 +63,9 @@ export class WebApi extends Construct {
     orderDS.createResolver({
       typeName: 'Mutation',
       fieldName: 'createOrder',
-      requestMappingTemplate: MappingTemplate.fromString(`
-{
-  "version": "2017-02-28",
-  "operation": "PutItem",
-  "key" : {
-    "orderId" : $util.dynamodb.toDynamoDBJson($util.autoId())
-  },
-  "attributeValues": $util.dynamodb.toMapValuesJson({
-    "orderId": $ctx.args.input.orderId,
-    "userId": $ctx.args.input.userId,
-    "address": $ctx.args.input.address,
-    "menuItems": $ctx.args.input.menuItems,
-    "orderValid": false,
-    "paymentValid": false,
-    "restaurantApproved": false,
-    "driverAssigned": false,
-    "createdAt": $util.time.nowISO8601()
-  })
-}`),
+      requestMappingTemplate: MappingTemplate.fromFile(
+        resolve(__dirname, '../../src/vtl/create-order.vtl')
+      ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
     });
 
